@@ -47,15 +47,15 @@ MONGO_URI = os.environ.get('MONGO_URI')
 
 if MONGO_URI:
     INSTALLED_APPS = [
-        # 'qa_site.apps.MongoAdminConfig',
-        # 'qa_site.apps.MongoAuthConfig',
-        # 'qa_site.apps.MongoContentTypesConfig',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-        'django_mongodb_backend',
-        'core',
-    ]
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django_mongodb_backend',
+    'core',
+]
 else:
     INSTALLED_APPS = [
         'django.contrib.admin',
@@ -119,13 +119,13 @@ if MONGO_URI:
         }
     }
     DATABASE_ROUTERS = ['django_mongodb_backend.routers.MongoRouter']
-    # Contrib apps (admin, auth, contenttypes) need their own MongoDB-specific
-    # migrations, separate from the default SQL-flavored ones shipped with Django.
-    MIGRATION_MODULES = {
-        'admin': 'qa_site.mongo_migrations.admin',
-        'auth': 'qa_site.mongo_migrations.auth',
-        'contenttypes': 'qa_site.mongo_migrations.contenttypes',
-    }
+    # # Contrib apps (admin, auth, contenttypes) need their own MongoDB-specific
+    # # migrations, separate from the default SQL-flavored ones shipped with Django.
+    # MIGRATION_MODULES = {
+    #     'admin': 'qa_site.mongo_migrations.admin',
+    #     'auth': 'qa_site.mongo_migrations.auth',
+    #     'contenttypes': 'qa_site.mongo_migrations.contenttypes',
+    # }
 else:
     default_sqlite_path = os.environ.get('SQLITE_DB_PATH')
     if not default_sqlite_path and os.environ.get('VERCEL'):
