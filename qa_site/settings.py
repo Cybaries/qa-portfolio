@@ -127,10 +127,14 @@ if MONGO_URI:
         'contenttypes': 'qa_site.mongo_migrations.contenttypes',
     }
 else:
+    default_sqlite_path = os.environ.get('SQLITE_DB_PATH')
+    if not default_sqlite_path and os.environ.get('VERCEL'):
+        default_sqlite_path = '/tmp/db.sqlite3'
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': default_sqlite_path or BASE_DIR / 'db.sqlite3',
         }
     }
 
