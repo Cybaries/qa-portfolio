@@ -13,8 +13,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
@@ -47,15 +51,15 @@ MONGO_URI = os.environ.get('MONGO_URI')
 
 if MONGO_URI:
     INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_mongodb_backend',
-    'core',
-]
+        'qa_site.apps.MongoAdminConfig',
+        'qa_site.apps.MongoAuthConfig',
+        'qa_site.apps.MongoContentTypesConfig',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'django_mongodb_backend',
+        'core',
+    ]
 else:
     INSTALLED_APPS = [
         'django.contrib.admin',
@@ -119,22 +123,18 @@ if MONGO_URI:
         }
     }
     DATABASE_ROUTERS = ['django_mongodb_backend.routers.MongoRouter']
-    # # Contrib apps (admin, auth, contenttypes) need their own MongoDB-specific
-    # # migrations, separate from the default SQL-flavored ones shipped with Django.
-    # MIGRATION_MODULES = {
-    #     'admin': 'qa_site.mongo_migrations.admin',
-    #     'auth': 'qa_site.mongo_migrations.auth',
-    #     'contenttypes': 'qa_site.mongo_migrations.contenttypes',
-    # }
+    # Contrib apps (admin, auth, contenttypes) need their own MongoDB-specific
+    # migrations, separate from the default SQL-flavored ones shipped with Django.
+    MIGRATION_MODULES = {
+        'admin': 'qa_site.mongo_migrations.admin',
+        'auth': 'qa_site.mongo_migrations.auth',
+        'contenttypes': 'qa_site.mongo_migrations.contenttypes',
+    }
 else:
-    default_sqlite_path = os.environ.get('SQLITE_DB_PATH')
-    if not default_sqlite_path and os.environ.get('VERCEL'):
-        default_sqlite_path = '/tmp/db.sqlite3'
-
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': default_sqlite_path or BASE_DIR / 'db.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 
