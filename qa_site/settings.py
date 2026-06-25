@@ -47,9 +47,9 @@ MONGO_URI = os.environ.get('MONGO_URI')
 
 if MONGO_URI:
     INSTALLED_APPS = [
-        'qa_site.apps.MongoAdminConfig',
-        'qa_site.apps.MongoAuthConfig',
-        'qa_site.apps.MongoContentTypesConfig',
+        # 'qa_site.apps.MongoAdminConfig',
+        # 'qa_site.apps.MongoAuthConfig',
+        # 'qa_site.apps.MongoContentTypesConfig',
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
