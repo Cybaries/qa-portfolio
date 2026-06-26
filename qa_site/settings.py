@@ -107,14 +107,14 @@ WSGI_APPLICATION = 'qa_site.wsgi.application'
 # Set these environment variables to use MongoDB:
 #   MONGO_URI      - full connection string, e.g.
 #                     mongodb+srv://<user>:<password>@<cluster>.mongodb.net/?retryWrites=true&w=majority
-#   MONGO_DB_NAME  - optional, database name (defaults to "portfolio")
+#   MONGO_DB_NAME  - optional, database name (defaults to "qa-portfolio")
 
 if MONGO_URI:
     DATABASES = {
         'default': {
             'ENGINE': 'django_mongodb_backend',
             'HOST': MONGO_URI,
-            'NAME': os.environ.get('MONGO_DB_NAME', 'portfolio'),
+            'NAME': os.environ.get('MONGO_DB_NAME', 'qa-portfolio'),
         }
     }
     DATABASE_ROUTERS = ['django_mongodb_backend.routers.MongoRouter']
